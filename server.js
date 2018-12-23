@@ -57,29 +57,30 @@ app.get("/articles", function(req, res) {
 });
 
 //route for getting article by id, and its note
-app.get("/article/:id", function(req, res) {
+app.get("/articles/:id", function(req, res) {
     db.Article.findOne({ _id: req.params.id })
         .populate("note")
-        .then(dbArticle => {
+        .then(function(dbArticle) {
             res.json(dbArticle);
         })
-        .catch(err => {
+        .catch(function(err) {
+            console.log("error here");
             res.json(err);
         });
 });
 
 //route for saving / updating notes
-app.get("/article/:id", function(req, res) {
+app.post("/articles/:id", function(req, res) {
     db.Note.create(req.body)
         .then(dbNote => {
             return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
         })
-        .then(dbArticle => {
+        .then(function(dbArticle) {
             res.json(dbArticle);
         })
-        .catch(err => {
+        .catch(function(err) {
             res.json(err);
-        })
+        });
 });
 
 // Start the server
