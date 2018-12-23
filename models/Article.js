@@ -4,7 +4,7 @@ let Schema = mongoose.Schema;
 
 let ArticleSchema = new Schema({
     title: {
-        String,
+        type: String,
         required: true
     },
     link: {
